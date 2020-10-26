@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)file:///D:/EXIF/DMS%20to%20LAT/DMS%20to%20decimal%20lat-lng2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>DMS to decimal lat-lng</title>
+	<meta name="description" content="Конвертация GPS координат из формата DMS (Degrees, minutes, seconds) в градусы (latitude/longitude)">
+
+
+<script>
+
+function toDecimal() {
+	var latD = document.getElementById('latD').value;
+	var latM = document.getElementById('latM').value;
+	var latS = document.getElementById('latS').value;
+	var lngD = document.getElementById('lngD').value;
+	var lngM = document.getElementById('lngM').value;
+	var lngS = document.getElementById('lngS').value;
+	var lat, lng;
+	
+	lat = parseFloat(latD) + parseFloat(latM) / 60 + parseFloat(latS) / 3600;
+	if(document.getElementById('S').checked == true) lat = lat * (-1);
+	
+	lng = parseFloat(lngD) + parseFloat(lngM)/60 + parseFloat(lngS)/3600;
+	if(document.getElementById('W').checked == true) lng = lng * (-1);
+	
+	document.getElementById('result').value = (lat).toFixed(7) + "," + (lng).toFixed(7);
+
+}
+
+function ParseDMS() {
+	var input = document.getElementById('latlongDMS').value;
+	input = input.replace(".","X");
+	input = input.replace(".","X");
+    var parts = input.split(/[^\d\w]+/);
+    parts[2] = parts[2].replace("X",".");
+    parts[6] = parts[6].replace("X",".");
+
+	document.getElementById('latD').value = parts[0];
+	document.getElementById('latM').value = parts[1];
+	document.getElementById('latS').value = parts[2];
+	document.getElementById('lngD').value = parts[4];
+	document.getElementById('lngM').value = parts[5];
+	document.getElementById('lngS').value = parts[6];
+    if(parts[3].toUpperCase() == "S") document.getElementById('S').checked = true; else document.getElementById('N').checked = true;
+    if(parts[7].toUpperCase() == "W") document.getElementById('W').checked = true; else document.getElementById('E').checked = true;
+   	document.getElementById('result').value = "";
+ 
+}
+
+</script>
+</head>
+<body class="loaded">
+
+	<div id="content" style="background-color: white; height: auto !important;">
+
+		
+      <section class="row">
+      <div class="col-full">
+
+<h2>Конвертация GPS координат из формата DMS (Degrees, minutes, seconds) в DD (десятичные градусы)</h2>
+<p>Широта (Latitude) в формате DMS:<br>
+<input type="text" id="latD" name="latD" style="background-color:white; width:40px;">° 
+<input type="text" id="latM" name="latM" style="background-color:white; width:30px;">"
+<input type="text" id="latS" name="latS" style="background-color:white; width:55px;">'
+<label><input type="radio" name="latP" id="N" value="N" checked="">North</label>
+<label><input type="radio" name="latP" id="S" value="S">South</label>
+</p>
+<p>Долгота (Longitude) в формате DMS:<br>
+<input type="text" id="lngD" name="lngD" style="background-color:#DFD; width:40px;">° 
+<input type="text" id="lngM" name="lngM" style="background-color:#DFD; width:30px;">"
+<input type="text" id="lngS" name="lngS" style="background-color:#DFD; width:55px;">'
+<label><input type="radio" name="lngP" id="E" value="E" checked="">East</label>
+<label><input type="radio" name="lngP" id="W" value="W">West</label>
+
+
+</p>
+<input type="button" id="convert" value="Конвертировать" onclick="toDecimal();">
+<hr>
+Результат широта и долгота в <b>десятичных градусах</b>: <br>
+<input type="text" id="result" value="" style="width:300px; font-size:20px; background-color:white;">
+<hr>
+Donate: 3KLGhR5mKvg1azQHVGtJhq2eNLWVBY2JHh
+		</section>
+ 
+	</div>
+
+
+
+
